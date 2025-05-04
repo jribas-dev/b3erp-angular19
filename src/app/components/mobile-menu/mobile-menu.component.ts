@@ -9,7 +9,7 @@ import { LogoEmpresaComponent } from '../logo-empresa/logo-empresa.component';
   selector: 'app-mobile-menu',
   imports: [CommonModule, RouterLink, LogoEmpresaComponent],
   templateUrl: './mobile-menu.component.html',
-  styleUrls: ['./mobile-menu.component.scss']
+  styleUrls: ['./mobile-menu.component.css']
 })
 export class MobileMenuComponent implements OnInit {
   @Input() isOpen = false;

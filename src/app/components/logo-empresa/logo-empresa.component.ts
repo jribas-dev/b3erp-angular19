@@ -6,7 +6,7 @@ import { RouterLink } from '@angular/router';
   selector: 'app-logo-empresa',
   imports: [RouterLink, NgOptimizedImage],
   templateUrl: './logo-empresa.component.html',
-  styleUrl: './logo-empresa.component.scss'
+  styleUrl: './logo-empresa.component.css'
 })
 export class LogoEmpresaComponent {
   @Input() dark = false;

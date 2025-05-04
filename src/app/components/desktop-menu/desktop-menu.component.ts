@@ -8,7 +8,7 @@ import { MenuItem } from '../../models/menu-item.model';
   selector: 'app-desktop-menu',
   imports: [CommonModule, MenuItemComponent],
   templateUrl: './desktop-menu.component.html',
-  styleUrl: './desktop-menu.component.scss',
+  styleUrl: './desktop-menu.component.css',
 })
 export class DesktopMenuComponent {
   @Input() menuItems: MenuItem[] = [];

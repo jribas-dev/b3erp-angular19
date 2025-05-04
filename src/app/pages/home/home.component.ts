@@ -6,6 +6,6 @@ import { Router, RouterLink } from '@angular/router';
   selector: 'app-home',
   imports: [RouterLink, NgOptimizedImage],
   templateUrl: './home.component.html',
-  styleUrl: './home.component.scss',
+  styleUrl: './home.component.css',
 })
 export class HomeComponent {}

@@ -15,7 +15,7 @@ import { MenuItem } from '../../models/menu-item.model';
     LogoEmpresaComponent,
   ],
   templateUrl: './header.component.html',
-  styleUrl: './header.component.scss',
+  styleUrl: './header.component.css',
 })
 export class HeaderComponent implements OnInit {
   menuItems: MenuItem[] = [];
