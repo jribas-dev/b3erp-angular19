@@ -1,0 +1,51 @@
+<div
+  *ngIf="
+    item.hasSubmenu && item.subMenuItems && item.subMenuItems.length > 0;
+    else simpleLink
+  "
+  class="relative"
+  #menuItemRef
+>
+  <div
+    class="flex items-center space-x-1 cursor-pointer nav-link"
+    (click)="toggleSubmenu()"
+  >
+    <span>{{ item.name }}</span>
+    <svg
+      [class.rotate-180]="isSubmenuOpen"
+      class="transition-transform"
+      xmlns="http://www.w3.org/2000/svg"
+      width="16"
+      height="16"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    >
+      <polyline points="6 9 12 15 18 9"></polyline>
+    </svg>
+  </div>
+
+  @if (isSubmenuOpen) {
+  <div
+    class="absolute top-full left-0 mt-2 bg-white shadow-lg rounded-md py-2 min-w-max z-50"
+  >
+    @for (subItem of item.subMenuItems; track subItem.name) {
+    <a
+      [routerLink]="[subItem.routePath]"
+      class="block px-4 py-2 text-gray-800 hover:bg-gray-100 whitespace-nowrap"
+      (click)="closeSubmenu()"
+    >
+      {{ subItem.name }}
+    </a>
+    }
+  </div>
+  }
+</div>
+<ng-template #simpleLink>
+  <a [routerLink]="[item.routePath || '/']" class="nav-link">
+    {{ item.name }}
+  </a>
+</ng-template>
