@@ -1,6 +1,6 @@
 // src/app/components/mobile-menu/mobile-menu.component.ts
 import { Component, Input, OnInit } from '@angular/core';
-import { MenuItem } from '../../models/menu-item.model'; 
+import { MenuItem } from '../../models/menu-item.model';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { LogoEmpresaComponent } from '../logo-empresa/logo-empresa.component';
@@ -9,28 +9,30 @@ import { LogoEmpresaComponent } from '../logo-empresa/logo-empresa.component';
   selector: 'app-mobile-menu',
   imports: [CommonModule, RouterLink, LogoEmpresaComponent],
   templateUrl: './mobile-menu.component.html',
-  styleUrls: ['./mobile-menu.component.css']
+  styleUrls: ['./mobile-menu.component.css'],
 })
 export class MobileMenuComponent implements OnInit {
   @Input() isOpen = false;
   @Input() menuItems: MenuItem[] = [];
   @Input() onClose: () => void = () => {};
-  
+
   openSubmenus: Record<string, boolean> = {};
-  
+
+  currentYear: number = new Date().getFullYear();
+
   ngOnInit(): void {
     // Inicializa o estado dos submenus
-    this.menuItems.forEach(item => {
+    this.menuItems.forEach((item) => {
       if (item.hasSubmenu) {
         this.openSubmenus[item.name] = false;
       }
     });
   }
-  
+
   toggleSubmenu(menuName: string): void {
     this.openSubmenus[menuName] = !this.openSubmenus[menuName];
   }
-  
+
   isSubmenuOpen(menuName: string): boolean {
     return this.openSubmenus[menuName] || false;
   }

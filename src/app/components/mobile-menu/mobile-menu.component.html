@@ -4,89 +4,100 @@
   [class.translate-x-0]="isOpen"
   [class.-translate-x-full]="!isOpen"
 >
-  <div class="p-4 flex justify-between">
-    <div class="text-white text-2xl font-bold">
-      <app-logo-empresa [dark]="true"></app-logo-empresa>
-    </div>
-    <button
-      class="text-white text-2xl"
-      (click)="onClose()"
-      aria-label="Close menu"
-    >
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        width="24"
-        height="24"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        stroke-width="2"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-      >
-        <line x1="18" y1="6" x2="6" y2="18"></line>
-        <line x1="6" y1="6" x2="18" y2="18"></line>
-      </svg>
-    </button>
-  </div>
-
-  <nav class="p-4">
-    @for (item of menuItems; track item.name) { @if (item.hasSubmenu) {
-    <div>
-      <div
-        class="flex justify-between items-center py-3 text-white cursor-pointer"
-        (click)="toggleSubmenu(item.name)"
-      >
-        <span class="flex-1">{{ item.name }}</span>
-        <button
-          class="p-2 focus:outline-none z-10 relative"
-          (click)="$event.stopPropagation(); toggleSubmenu(item.name)"
-          [attr.aria-label]="
-            (isSubmenuOpen(item.name) ? 'Collapse' : 'Expand') +
-            ' ' +
-            item.name +
-            ' submenu'
-          "
-        >
-          <span
-            class="transition-transform block"
-            [class.rotate-90]="isSubmenuOpen(item.name)"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="20"
-              height="20"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            >
-              <polyline points="9 18 15 12 9 6"></polyline>
-            </svg>
-          </span>
-        </button>
+  <div class="h-full flex flex-col">
+    <div class="p-4 flex justify-between">
+      <div class="text-white text-2xl font-bold">
+        <app-logo-empresa [dark]="true"></app-logo-empresa>
       </div>
+      <button
+        class="text-white text-2xl"
+        (click)="onClose()"
+        aria-label="Close menu"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
+    </div>
 
-      @if (isSubmenuOpen(item.name) && item.subMenuItems) {
-      <div class="ml-4 border-l-2 border-blue-400 pl-4">
-        @for (subItem of item.subMenuItems; track subItem.name) {
-        <div class="submenu-item text-gray-100 py-2">
-          <a [routerLink]="[subItem.routePath]" (click)="onClose()">
-            {{ subItem.name }}
-          </a>
+    <nav class="p-4">
+      @for (item of menuItems; track item.name) { @if (item.hasSubmenu) {
+      <div>
+        <div
+          class="flex justify-between items-center py-3 text-white cursor-pointer"
+          (click)="toggleSubmenu(item.name)"
+        >
+          <span class="flex-1">{{ item.name }}</span>
+          <button
+            class="p-2 focus:outline-none z-10 relative"
+            (click)="$event.stopPropagation(); toggleSubmenu(item.name)"
+            [attr.aria-label]="
+              (isSubmenuOpen(item.name) ? 'Collapse' : 'Expand') +
+              ' ' +
+              item.name +
+              ' submenu'
+            "
+          >
+            <span
+              class="transition-transform block"
+              [class.rotate-90]="isSubmenuOpen(item.name)"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <polyline points="9 18 15 12 9 6"></polyline>
+              </svg>
+            </span>
+          </button>
+        </div>
+
+        @if (isSubmenuOpen(item.name) && item.subMenuItems) {
+        <div class="ml-4 border-l-2 border-blue-400 pl-4">
+          @for (subItem of item.subMenuItems; track subItem.name) {
+          <div class="submenu-item text-gray-100 py-2">
+            <a [routerLink]="[subItem.routePath]" (click)="onClose()">
+              {{ subItem.name }}
+            </a>
+          </div>
+          }
         </div>
         }
       </div>
-      }
+      } @else {
+      <a
+        [routerLink]="[item.routePath || '/']"
+        class="block"
+        (click)="onClose()"
+      >
+        <div class="py-3 text-white cursor-pointer">
+          {{ item.name }}
+        </div>
+      </a>
+      } }
+    </nav>
+    <!-- Rodapé fixado ao final -->
+    <div class="text-white text-center p-4 mt-auto shadow-inner">
+      <p>B3Erp WebApp © {{ currentYear }}</p>
+      <p>Todos os direitos reservados</p>
     </div>
-    } @else {
-    <a [routerLink]="[item.routePath || '/']" class="block" (click)="onClose()">
-      <div class="py-3 text-white cursor-pointer">
-        {{ item.name }}
-      </div>
-    </a>
-    } }
-  </nav>
+  </div>
 </div>
