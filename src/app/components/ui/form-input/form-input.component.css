@@ -1,0 +1,33 @@
+/* Efeito de transição para o foco e hover */
+input:focus,
+textarea:focus,
+select:focus {
+  transition: all 0.2s ease-in-out;
+}
+
+/* Estilo para campos com máscara */
+input.masked {
+  font-family: monospace;
+  letter-spacing: 0.5px;
+}
+
+/* Para campo de senha com visibilidade alternável */
+.password-toggle {
+  cursor: pointer;
+}
+
+/* Animação suave para mensagens de erro */
+div[role="alert"] {
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-5px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

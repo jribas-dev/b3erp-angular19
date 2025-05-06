@@ -45,7 +45,22 @@
   }
 </div>
 <ng-template #simpleLink>
-  <a [routerLink]="[item.routePath || '/']" class="nav-link">
+  @if(item.routePath?.includes('http')) {
+  <a
+    [href]="item.routePath"
+    class="block"
+    target="_blank"
+    (click)="closeSubmenu()"
+    >{{ item.name }}</a
+  >
+  } @else {
+  <a
+    [routerLink]="[item.routePath || '/']"
+    class="nav-link"
+    target="_blank"
+    (click)="closeSubmenu()"
+  >
     {{ item.name }}
   </a>
+  }
 </ng-template>

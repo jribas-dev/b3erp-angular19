@@ -1,0 +1,117 @@
+<div class="mb-4">
+  <!-- Label -->
+  @if(label) {
+    <label 
+      [for]="id" 
+      class="block text-sm font-medium text-gray-700 mb-1"
+      [attr.aria-required]="required"
+    >
+      {{ label }}
+      @if(required) { <span class="text-red-500">*</span> }
+    </label>
+  }
+
+  <!-- Helper Text -->
+  @if(helperText) {
+    <p class="text-xs text-gray-500 mb-1">{{ helperText }}</p>
+  }
+
+  <!-- Field Container -->
+  <div class="relative">
+    <!-- Prefix Icon or Content -->
+    @if(prefixIcon || prefixTemplate) {
+      <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+        @if(prefixIcon) {
+          <i class="material-icons text-gray-500 text-sm">{{ prefixIcon }}</i>
+        } @else if(prefixTemplate) {
+          <ng-container [ngTemplateOutlet]="prefixTemplate"></ng-container>
+        }
+      </div>
+    }
+
+    <!-- Input Field -->
+    @if(fieldType === 'input') {
+      <input
+        [id]="id"
+        [type]="type"
+        [formControl]="control"
+        [placeholder]="placeholder"
+        [attr.maxlength]="maxLength"
+        [attr.disabled]="disabled ? true : null"
+        [attr.readonly]="readonly ? true : null"
+        [attr.aria-invalid]="hasErrors()"
+        [attr.aria-describedby]="hasErrors() ? id + '-error' : null"
+        [ngClass]="fieldClasses()"
+        (focus)="onFocus()"
+        (blur)="onBlur()"
+        (input)="onInput($event)"
+      />
+    }
+
+    <!-- Textarea -->
+    @else if(fieldType === 'textarea') {
+      <textarea
+        [id]="id"
+        [formControl]="control"
+        [placeholder]="placeholder"
+        [attr.maxlength]="maxLength"
+        [attr.disabled]="disabled ? true : null"
+        [attr.readonly]="readonly ? true : null"
+        [attr.aria-invalid]="hasErrors()"
+        [attr.aria-describedby]="hasErrors() ? id + '-error' : null"
+        rows="4"
+        [ngClass]="fieldClasses()"
+        (focus)="onFocus()"
+        (blur)="onBlur()"
+      ></textarea>
+    }
+
+    <!-- Select -->
+    @else if(fieldType === 'select') {
+      <select
+        [id]="id"
+        [formControl]="control"
+        [attr.disabled]="disabled ? true : null"
+        [attr.aria-invalid]="hasErrors()"
+        [attr.aria-describedby]="hasErrors() ? id + '-error' : null"
+        [ngClass]="fieldClasses()"
+        (focus)="onFocus()"
+        (blur)="onBlur()"
+      >
+        <option value="" disabled>Selecione...</option>
+        @for(option of options; track option.value) {
+          <option [value]="option.value">{{ option.label }}</option>
+        }
+      </select>
+    }
+
+    <!-- Suffix Icon or Content -->
+    @if(suffixIcon || suffixTemplate) {
+      <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+        @if(suffixIcon) {
+          <i class="material-icons text-gray-500 text-sm">{{ suffixIcon }}</i>
+        } @else if(suffixTemplate) {
+          <ng-container [ngTemplateOutlet]="suffixTemplate"></ng-container>
+        }
+      </div>
+    }
+
+    <!-- Character Counter -->
+    @if(maxLength && control.value) {
+      <div class="absolute right-2 -bottom-5 text-xs text-gray-500">
+        {{ control.value.length || 0 }}/{{ maxLength }}
+      </div>
+    }
+  </div>
+
+  <!-- Error Message -->
+  @if(hasErrors()) {
+    <div 
+      [id]="id + '-error'" 
+      class="text-sm text-red-600 mt-1"
+      role="alert"
+    >
+      {{ getErrorMessage() }}
+    </div>
+  }
+</div>

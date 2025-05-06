@@ -1,0 +1,157 @@
+<div
+  class="flex flex-col items-center bg-gray-100 shadow-lg p-6 rounded-md mb-4"
+>
+  <h1 class="text-2xl font-bold mb-6">ACESSO SISTEMA</h1>
+  <form
+    [formGroup]="cadastroForm"
+    (ngSubmit)="onSubmit()"
+    class="max-w-md mx-auto p-6 bg-white rounded-lg shadow-md"
+  >
+    <!-- Nome completo -->
+    <app-form-input
+      id="nome"
+      label="Nome Completo"
+      placeholder="Digite seu nome completo"
+      [control]="this.getControl('nome')"
+      [required]="true"
+    ></app-form-input>
+
+    <!-- E-mail -->
+    <app-form-input
+      id="email"
+      label="E-mail"
+      type="email"
+      placeholder="seu@email.com"
+      [control]="this.getControl('email')"
+      [required]="true"
+    ></app-form-input>
+
+    <!-- Telefone com máscara e validação -->
+    <app-form-input
+      id="telefone"
+      label="Telefone"
+      type="tel"
+      placeholder="(00) 00000-0000"
+      [control]="this.getControl('telefone')"
+      [required]="true"
+      mask="(00) 00000-0000"
+    ></app-form-input>
+
+    <!-- Senha com validação de força -->
+    <app-form-input
+      id="senha"
+      label="Senha"
+      type="password"
+      placeholder="Digite sua senha"
+      [control]="this.getControl('senha')"
+      [required]="true"
+      helperText="Mínimo 8 caracteres, com letras maiúsculas, minúsculas e números"
+    >
+      <ng-template #suffix>
+        <span
+          class="password-toggle"
+          (click)="togglePasswordVisibility('senha')"
+        >
+          <i class="material-icons text-gray-500">{{
+            showPassword ? "visibility_off" : "visibility"
+          }}</i>
+        </span>
+      </ng-template>
+    </app-form-input>
+
+    <!-- Confirmação de senha -->
+    <app-form-input
+      id="confirmaSenha"
+      label="Confirme sua senha"
+      type="password"
+      placeholder="Digite sua senha novamente"
+      [control]="this.getControl('confirmaSenha')"
+      [required]="true"
+    >
+      <ng-template #suffix>
+        <span
+          class="password-toggle"
+          (click)="togglePasswordVisibility('confirmaSenha')"
+        >
+          <i class="material-icons text-gray-500">{{
+            showConfirmPassword ? "visibility_off" : "visibility"
+          }}</i>
+        </span>
+      </ng-template>
+    </app-form-input>
+
+    <!-- Mensagem de erro personalizada para validação de senha -->
+    @if(cadastroForm.get('confirmaSenha')?.hasError('mismatch') &&
+    cadastroForm.get('confirmaSenha')?.touched) {
+    <div class="text-sm text-red-600 mb-4">As senhas não correspondem</div>
+    }
+
+    <!-- Exibição de erros de validação de senha forte -->
+    @if(cadastroForm.get('senha')?.hasError('strongPassword') &&
+    cadastroForm.get('senha')?.touched) {
+    <div class="text-sm text-gray-700 mb-4 p-3 bg-gray-100 rounded-lg">
+      <p class="font-medium mb-2">Sua senha deve conter:</p>
+      <ul class="list-inside">
+        <li class="flex items-center">
+          <i
+            class="material-icons text-sm mr-2"
+            [ngClass]="{'text-green-500': cadastroForm.get('senha')?.errors?.['strongPassword']?.hasMinLength, 'text-red-500': !cadastroForm.get('senha')?.errors?.['strongPassword']?.hasMinLength}"
+          >
+            {{cadastroForm.get('senha')?.errors?.['strongPassword']?.hasMinLength ? 'check_circle' : 'cancel'}}
+          </i>
+          Mínimo de 8 caracteres
+        </li>
+        <li class="flex items-center">
+          <i
+            class="material-icons text-sm mr-2"
+            [ngClass]="{'text-green-500': cadastroForm.get('senha')?.errors?.['strongPassword']?.hasUpperCase, 'text-red-500': !cadastroForm.get('senha')?.errors?.['strongPassword']?.hasUpperCase}"
+          >
+            {{cadastroForm.get('senha')?.errors?.['strongPassword']?.hasUpperCase ? 'check_circle' : 'cancel'}}
+          </i>
+          Ao menos uma letra maiúscula
+        </li>
+        <li class="flex items-center">
+          <i
+            class="material-icons text-sm mr-2"
+            [ngClass]="{'text-green-500': cadastroForm.get('senha')?.errors?.['strongPassword']?.hasLowerCase, 'text-red-500': !cadastroForm.get('senha')?.errors?.['strongPassword']?.hasLowerCase}"
+          >
+            {{cadastroForm.get('senha')?.errors?.['strongPassword']?.hasLowerCase ? 'check_circle' : 'cancel'}}
+          </i>
+          Ao menos uma letra minúscula
+        </li>
+        <li class="flex items-center">
+          <i
+            class="material-icons text-sm mr-2"
+            [ngClass]="{'text-green-500': cadastroForm.get('senha')?.errors?.['strongPassword']?.hasNumeric, 'text-red-500': !cadastroForm.get('senha')?.errors?.['strongPassword']?.hasNumeric}"
+          >
+            {{cadastroForm.get('senha')?.errors?.['strongPassword']?.hasNumeric ? 'check_circle' : 'cancel'}}
+          </i>
+          Ao menos um número
+        </li>
+      </ul>
+    </div>
+    }
+
+    <div class="mt-6">
+      <button
+        type="submit"
+        class="w-full py-2 px-4 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-xl transition cursor-pointer"
+        [disabled]="cadastroForm.invalid || cadastroForm.pending"
+      >
+        Cadastrar
+      </button>
+    </div>
+  </form>
+</div>
+
+<div class="flex flex-row justify-between">
+  <p class="text-sm text-right">
+    <a routerLink="/auth/reset-password" class="text-blue-600 hover:underline"
+      >esqueci a senha</a
+    >
+  </p>
+  <p class="text-sm text-right">
+    <a routerLink="/" class="text-blue-600 hover:underline">voltar</a>
+  </p>
+</div>
+

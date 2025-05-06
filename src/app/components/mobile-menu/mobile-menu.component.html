@@ -5,8 +5,8 @@
   [class.-translate-x-full]="!isOpen"
 >
   <div class="h-full flex flex-col">
-    <div class="p-4 flex justify-between">
-      <div class="text-white text-2xl font-bold">
+    <div class="p-4 flex justify-between border-b-2 border-blue-400">
+      <div class="text-white text-2xl font-bold" (click)="onClose()">
         <app-logo-empresa [dark]="true"></app-logo-empresa>
       </div>
       <button
@@ -82,6 +82,17 @@
         </div>
         }
       </div>
+      } @else { @if(item.routePath?.includes('http')) {
+      <a
+        [href]="item.routePath"
+        class="block"
+        target="_blank"
+        (click)="onClose()"
+      >
+        <div class="py-3 text-white cursor-pointer">
+          {{ item.name }}
+        </div>
+      </a>
       } @else {
       <a
         [routerLink]="[item.routePath || '/']"
@@ -92,10 +103,10 @@
           {{ item.name }}
         </div>
       </a>
-      } }
+      } } }
     </nav>
     <!-- Rodapé fixado ao final -->
-    <div class="text-white text-center p-4 mt-auto shadow-inner">
+    <div class="text-white text-center p-4 mt-auto border-t-2 border-blue-400">
       <p>B3Erp WebApp © {{ currentYear }}</p>
       <p>Todos os direitos reservados</p>
     </div>
